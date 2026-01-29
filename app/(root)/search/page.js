@@ -4,7 +4,7 @@ import noBooks from "@/images/no-books.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Books from '@/components/Books';
-
+import ProtectedRoute from "@/components/ProtectedRoute";
 export default function Search() {
   const [search, setSearch] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -32,7 +32,7 @@ export default function Search() {
       const fetchBooks = async () => {
         try {
           setIsLoading(true);
-          const res = await fetch(`/api/searchBooks?category=${encodeURIComponent(searchedText)}`, { signal });
+          const res = await fetch(`https://librarysystem.runasp.net/api/Book/search?genre=${encodeURIComponent(searchedText)}`);
   
           if (!res.ok) throw new Error("Error fetching books");
   
@@ -54,6 +54,7 @@ export default function Search() {
   
 
   return (
+    <ProtectedRoute>
     <div className="flex flex-col items-center justify-center gap-6 mt-16">
       <div className="text-center w-[300px] sm:w-[580px] md:w-[630px] flex flex-col items-center justify-center gap-8">
         <p className='text-[#D6E0FF] font-semibold text-[14px] sm:text-[18px] leading-7 '>DISCOVER YOUR NEXT GREAT READ:</p>
@@ -95,5 +96,6 @@ export default function Search() {
         )}
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

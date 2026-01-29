@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import logo from "@/images/logo.png"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BorrowButton from "./borrowButton";
 
 export default function Receipt({show, handleShow, bookId, title, studentName}){
@@ -16,7 +16,7 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
     
         return `${month} ${day}, ${year}`;
     }
-    
+        
     const getFutureDate = (daysAhead = 4) => {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const date = new Date();
@@ -30,6 +30,14 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
         return `${month} ${day}, ${year}`;
     };
     
+      const [user, setUser] = useState(null);
+    
+      useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      }, []);
     
     return(
         <div className={`w-full h-full fixed  inset-0  items-center justify-center ${show ? 'flex' : 'hidden'}  z-10  backdrop-blur-xl`}>
@@ -43,7 +51,7 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
            <hr className="w-[90%] border border-[#232839] my-[1rem] sm:my-8"/>
            <div className="flex flex-col items-start justify-normal gap-4">
             <h3 className='font-semibold text-[16px] sm:text-[24px] leading-8 text-white'>Your Receipt for <span className="text-[#EED1AC]">{title}</span> is Ready!</h3>
-            <p className="font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">Hi <span className="text-[#EED1AC]">{studentName}</span>,</p>
+            <p className="font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">Hi <span className="text-[#EED1AC]">{user?.name}</span>,</p>
                 <ul className="list-disc font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">
                     <p className="font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">
                     Your receipt for borrowing <span className="text-[#EED1AC]">{title}</span> has been generated. Here are the details:

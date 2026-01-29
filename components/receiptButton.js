@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Receipt from "./receipt";
 import { createClients } from '@/utils/supabase/server'
 
-export default function ReceiptButton({bookId, borrowed, title, studentName }){
+export default function ReceiptButton({bookId, borrowed = false, title, studentName }){
     const [show, setShow] = useState(false);
 
     const handleShow = () =>{

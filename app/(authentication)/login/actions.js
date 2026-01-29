@@ -10,18 +10,18 @@ export async function login(formData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
-  }
+  // const data = {
+  //   email: formData.get('email'),
+  //   password: formData.get('password'),
+  // }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  // const { error } = await supabase.auth.signInWithPassword(data)
 
-  if (error) {
-    redirect("/login?error=Invalid username or password.");
-  }
+  // if (error) {
+  //   redirect("/login?error=Invalid username or password.");
+  // }
 
-  revalidatePath('/', 'layout')
+  // revalidatePath('/', 'layout')
   redirect('/')
 }
 

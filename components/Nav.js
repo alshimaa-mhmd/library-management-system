@@ -3,13 +3,14 @@ import Link from "next/link";
 import icon from "@/images/logo.png"
 import log_out from "@/images/Frame 162.png"
 import Image from "next/image";
-import { logout } from "@/app/logout/actions";
+// import { logout } from "@/app/logout/actions";
 import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 import { useState } from "react";
-
+import { useAuth } from "@/contexts/AuthContext";
 export default function Nav(){
     const [active, setActive] = useState('home')
     const [openMenu, setOpenMenu] = useState(false)
+    const {logout} = useAuth();
     return(
         <nav className="flex items-center justify-between p-12 bg-transprent">
             <Link href='/' className="flex items-center justify-center gap-2"><Image src={icon} width={40} height={30} alt="icon" className="w-[25px] sm:w-[40px]" /> <p className="font-semibold text-[18px] sm:text-[28px] leading-6">BookWise</p></Link>
@@ -43,11 +44,11 @@ export default function Nav(){
                         setActive('profile')
                         setOpenMenu(!openMenu)
                         }}>Profile</Link>
-                    <form action={logout}>
-                        <button type='submit'>
+                   
+                        <button type='submit' onClick={logout}>  
                             <Image src={log_out} alt="logout" width={24} height={24} />
                         </button>
-                    </form>
+                    
             </div>
             </div>
         </nav>
