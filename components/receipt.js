@@ -31,12 +31,17 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
     };
     
       const [user, setUser] = useState(null);
+      const [borrowedOn, setBorrowedOn] = useState('');
+      const [dueDate, setDueDate] = useState('');
     
       useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
         }
+
+        setBorrowedOn(getCurrentDate());
+        setDueDate(getFutureDate());
       }, []);
     
     return(
@@ -56,8 +61,8 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
                     <p className="font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">
                     Your receipt for borrowing <span className="text-[#EED1AC]">{title}</span> has been generated. Here are the details:
                     </p>
-                    <li className="ml-10">Borrowed On: <span className="text-[#EED1AC]">{getCurrentDate()} </span> </li>
-                    <li className="ml-10">Due Date: <span className="text-[#EED1AC]">{getFutureDate()} </span></li>
+                    <li className="ml-10">Borrowed On: <span className="text-[#EED1AC]">{borrowedOn} </span> </li>
+                    <li className="ml-10">Due Date: <span className="text-[#EED1AC]">{dueDate} </span></li>
                 </ul>
                 <p className="font-normal text-[13px] sm:text-[18px] leading-7 text-[#D6E0FF]">
                 You can download the receipt here:
