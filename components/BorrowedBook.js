@@ -1,6 +1,5 @@
 import book from '@/images/book.png'
 import warning from '@/images/warning-2.png'
-import due from '@/images/Frame (2).png'
 import Image from 'next/image'
 export default async function BorrowedBook({borrowedBooks}){
     const getCurrentDate = () => {
@@ -42,7 +41,7 @@ export default async function BorrowedBook({borrowedBooks}){
                 <div className='flex items-center justify-center gap-1'>
                     {isDue ? <div className='text-red-300 gap-2 flex'><Image src={warning} alt='warning' className='w-6 h-6'/>Overdue Return</div> : 
                     <div className=' gap-1 flex'>
-                    <Image src={due} alt='book icon'  />
+                    <Image src={book} alt='book icon'  />
                     <p className="text-[16px] font-[400]  text-[#D6E0FF]">Due date <span className='text-[#EED1AC]'>{borrowedBook.due_date}</span> </p>
                     </div>
             }
