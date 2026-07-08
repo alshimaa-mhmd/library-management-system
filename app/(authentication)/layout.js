@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import bgImage from "@/images/EXPORT-BG.png"
+import bgImage from "@/images/EXPORTBG.png"
 import authImage from "@/images/auth-illustration.png"
 import "@/app/globals.css";
 import Image from "next/image";

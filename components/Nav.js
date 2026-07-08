@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import icon from "@/images/logo.png"
-import log_out from "@/images/Frame 162.png"
+import log_out from "@/images/Frame162.png"
 import Image from "next/image";
 // import { logout } from "@/app/logout/actions";
 import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";

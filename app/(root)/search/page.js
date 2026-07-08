@@ -1,6 +1,6 @@
 'use client';
 
-import noBooks from "@/images/no-books.png";
+import noBooks from "@/images/noBooks.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Books from '@/components/Books';
@@ -38,6 +38,7 @@ export default function Search() {
   
             const result = await res.json();
             setSearchedBooks(result);
+            console.log("Fetched books:", result); // Log the fetched books for debugging
         } catch (err) {
           if (err.name !== "AbortError") {
             console.error("Fetch error:", err);
@@ -82,7 +83,7 @@ export default function Search() {
         {!isLoading && searchedBooks.length > 0 ? (
                     <div className="flex flex-wrap items-start justify-normal gap-4">
                     {searchedBooks.map((book) => (
-                      <Books key={book.id} book={book} />
+                      <Books key={book.bookId} book={book} />
                     ))}
                   </div>
         ) : (

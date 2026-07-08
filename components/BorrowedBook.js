@@ -1,6 +1,6 @@
 import book from '@/images/book.png'
-import warning from '@/images/warning-2.png'
-import due from '@/images/Frame (2).png'
+import warning from '@/images/warning2.png'
+import due from '@/images/Frame(2).png'
 import Image from 'next/image'
 export default async function BorrowedBook({borrowedBooks}){
     const getCurrentDate = () => {

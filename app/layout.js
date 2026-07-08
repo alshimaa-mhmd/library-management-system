@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-// import bgImage from "@/images/EXPORT-BG.png"
+// import bgImage from "@/images/EXPORTBG.png"
 import "@/app/globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         
         <AuthProvider>       

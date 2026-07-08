@@ -1,7 +1,7 @@
 'use client'
 import { redirect } from 'next/navigation'
 import avatar from "@/images/image.png";
-import frame from "@/images/Frame 165.png";
+import frame from "@/images/Frame165.png";
 import verified from "@/images/Frame.png";
 import { createClients } from '@/utils/supabase/server'
 import Image from 'next/image';

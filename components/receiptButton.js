@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import bookImg from "@/images/Frame (1).png";
+import bookImg from "@/images/Frame(1).png";
 import { useEffect, useState } from "react";
 import Receipt from "./receipt";
 import { createClients } from '@/utils/supabase/server'

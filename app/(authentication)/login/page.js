@@ -6,7 +6,7 @@ import Link from "next/link";
 // import { login } from "./actions";
 import Image from "next/image";
 import logo from "@/images/logo.png"
-import warning from '@/images/warning-2.png'
+import warning from '@/images/warning2.png'
 
  
 export  default function  LoginPage({ searchParams }) {

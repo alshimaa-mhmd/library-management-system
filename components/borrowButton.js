@@ -1,7 +1,7 @@
 'use client'
 import borrow from "@/utils/supabase/borrowBook";
 import Image from "next/image";
-import bookImg from "@/images/Frame (1).png";
+import bookImg from "@/images/Frame(1).png";
 import { useState } from "react";
 
 export default function BorrowButton({bookId}) {

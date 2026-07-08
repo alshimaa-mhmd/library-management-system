@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import bookImg from "@/images/Frame (1).png";
+import bookImg from "@/images/Frame(1).png";
 import { createClients, createServerClients } from '@/utils/supabase/server';
 import  borrow  from "@/utils/supabase/borrowBook";
 import Books from "@/components/Books";

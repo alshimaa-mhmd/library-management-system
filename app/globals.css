@@ -15,7 +15,7 @@
 }
 
 body , .bg {
-  background-image: url('../images/EXPORT-BG.png');
+  background-image: url('../images/EXPORTBG.png');
   background-size: cover; /* Ensures the image covers the entire viewport */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
