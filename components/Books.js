@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function Books({book}) {
     const [ active, setActive] = useState(false)
+     console.log("Book object:", book); // 👀 add this
     return (
         <Link href={`/${book.bookId}`} className='w-[180px] h-[360px] cursor-pointer flex flex-col items-start justify-between my-8' onMouseEnter={() => setActive(true)}
         onMouseLeave = {() => setActive(false)}

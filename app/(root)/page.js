@@ -68,6 +68,7 @@ export default function Home() {
         const books = await response.json();
         setData(books);
         setError(null);
+        console.log("Fetched books:", books); // Log the fetched books for debugging
       } catch (err) {
         setError(err.message);
       } finally {

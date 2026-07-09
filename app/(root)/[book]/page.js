@@ -45,7 +45,11 @@ export default function Book({ params }) {
     const [error, setError] = useState(null);
     const { user, token, authLoading } = useAuth();
      const router = useRouter();
-     const { book } = use(params);
+       const resolvedParams = use(params);
+  console.log("Resolved params:", resolvedParams); // 👀 check this
+
+  const { book } = resolvedParams; // adjust key to match your folder name
+  console.log("book value:", book);
 
         // const response = await fetch(`http://192.168.x.x:7119/api/Book/${params.book}`);
         // const book = await response.json();
