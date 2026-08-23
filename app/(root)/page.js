@@ -4,14 +4,15 @@ import bookImg from "@/images/Frame(1).png";
 import { createClients, createServerClients } from '@/utils/supabase/server';
 import  borrow  from "@/utils/supabase/borrowBook";
 import Books from "@/components/Books";
-import BorrowButton from "@/components/borrowButton";
-import Receipt from "@/components/receipt";
-import ReceiptButton from "@/components/receiptButton";
+import BorrowButton from "@/components/BorrowButton";
+import Receipt from "@/components/Receipt";
+import ReceiptButton from "@/components/ReceiptButton";
 import Footer from "@/components/Footer";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from 'next/navigation';
+import BookContext from "@/contexts/BookContext";
 
 export default function Home() {
   
@@ -36,11 +37,12 @@ export default function Home() {
 
     // const borrowed = borrowedBooks.some(item => item.book_id === bookToFind. book_id);
 
- const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user, token, authLoading } = useAuth();
-   const router = useRouter();
+  const router = useRouter();
+  const { setBooksData } = useContext(BookContext);
 
      useEffect(() => {
     if (!authLoading && !token) {
@@ -67,6 +69,7 @@ export default function Home() {
 
         const books = await response.json();
         setData(books);
+        setBooksData(books); // Update the context with the fetched books
         setError(null);
         console.log("Fetched books:", books); // Log the fetched books for debugging
       } catch (err) {
@@ -82,14 +85,58 @@ export default function Home() {
   }, [token]);
    if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-xl text-gray-600">Loading...</div>
-      </div>
+        <div className="w-full h-full flex items-center justify-center">
+          Loading...
+            <svg
+            className="ml-3 size-5 animate-spin text-gray-600"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            />
+          </svg>
+        </div>
     );
   }
 
   if (isloading) {
-    return <div className="p-8 text-center">Loading books...</div>;
+    return (
+      <div className="w-full h-full flex items-center justify-center ">
+          Loading...
+            <svg
+            className="ml-3 size-5 animate-spin text-gray-600"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            />
+          </svg>
+        </div>
+    );
   }
 
   if (error) {
@@ -113,7 +160,7 @@ export default function Home() {
           <p className="font-[400] text-[16px] sm:text-[20px] leading-8 text-[#D6E0FF] w-full lg:w-[80%]">{data[0].description}</p>
           
           {/* <BorrowButton bookId={data[0]?.bookId} /> */}
-          <ReceiptButton bookId={data[0]?.bookId} borrowed = {false} title={data[0]?.title} studentName = {'lol'} />
+          <ReceiptButton book={data[0]} borrowed = {false} title={data[0]?.title} studentName = {'lol'} />
  
         </div>
         <div className='flex items-center justify-center lg:w-[276px] w-full my-8' >

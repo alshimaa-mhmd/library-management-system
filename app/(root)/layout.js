@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import Nav from "@/components/Nav";
+import BookProvider from "@/contexts/BookProvider";
 // import bgImage from "@/images/EXPORTBG.png"
 
 const geistSans = Geist({
@@ -20,11 +21,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-        <>
-        <Nav />
-        <main className="">
-          {children}
-        </main>
-        </>
+    <>
+    <BookProvider>
+      <Nav />
+      <main className="">
+        {children}
+      </main>
+    </BookProvider>
+    </>
   );
 }

@@ -7,8 +7,8 @@ import { createClients } from '@/utils/supabase/server'
 import Image from 'next/image';
 import BorrowedBook from '@/components/BorrowedBook';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState, useContext } from 'react';
+import BookContext from '@/contexts/BookContext';
 
 export default function Profile() {
   // const supabase = await createClients()
@@ -40,14 +40,29 @@ export default function Profile() {
   // //      console.error('Error fetching borrowed books:', error);
   // //      return [];
   // //  }
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const { BooksData, borrowedBooks, setBorrowedBooks } = useContext(BookContext);
+  // const [borrowedBooks, setBorrowedBooks] = useState(function(){
+  //   const storedBooks = localStorage.getItem('borrowedBooks') ;
+  //   // return JSON.parse(storedBooks) || [];
+  // })
+  const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
+  // useEffect(() => {
+  //   // const storedUser = localStorage.getItem('user');
+  //   // if (storedUser) {
+  //   //   // setUser(JSON.parse(storedUser));
+  //   // }
+  //   setBorrowedBooks(function(){
+  //   const storedBooks = localStorage.getItem('borrowedBooks') ;
+  //   if (!storedBooks) {
+  //     return [];
+  //   }else{
+  //   return JSON.parse(storedBooks);
+  //   }
+  // });
+  // }, [setBorrowedBooks]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
   return (
   // <p>Hello {data.user.email}</p>
   <ProtectedRoute>
@@ -63,7 +78,7 @@ export default function Profile() {
               <Image src={verified} alt='verified' width={16} height={16} />
               <span className='font-normal text-[14px] leading-5 text-[#D6E0FF]'>verified Student</span> 
             </div>
-            <p className='font-semibold text-[20px] sm:text-[24px] leading-8 text-wrap'>hi</p>
+            <p className='font-semibold text-[20px] sm:text-[24px] leading-8 text-wrap'>hello</p>
             <p className='font-normal text-[14px] leading-5 text-[#D6E0FF]'>{user?.name}</p>
           </div>
         </div>
@@ -74,7 +89,7 @@ export default function Profile() {
       </div>
       {/* right hand side */}
       <div className='flex w-full md:w-1/2 flex-wrap h-auto'>
-        {/* <BorrowedBook borrowedBooks = {borrowedBooks} /> */}
+        <BorrowedBook borrowedBooks = {borrowedBooks} />
       </div>
     </div>
     </ProtectedRoute>

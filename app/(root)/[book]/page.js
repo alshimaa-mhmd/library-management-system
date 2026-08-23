@@ -1,6 +1,6 @@
 'use client'
-import BorrowButton from "@/components/borrowButton";
-import ReceiptButton from "@/components/receiptButton";
+import BorrowButton from "@/components/BorrowButton";
+import ReceiptButton from "@/components/ReceiptButton";
 import { createClients, createServerClients } from "@/utils/supabase/server";
 import Link from "next/link";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -9,95 +9,64 @@ import { useEffect, useState, use } from "react";
 import { useRouter } from 'next/navigation';
 
 export default function Book({ params }) {
-  // const supabase = await createServerClients();
-  // // Use params.book directly
-  // const { data: book } = await supabase
-  //   .from("books")
-  //   .select("*")
-  //   .eq("id", params.book);
-  //   const serializedData = JSON.parse(JSON.stringify(book));
-  //   let { data: covers, error } = await supabase
-  //   .from('books')
-  //   .select('cover_url')
-  //   .eq('category', book[0].category);
 
-  //      const supabaseClient = await createClients()
-  //       // console.log(books);
-  //       const { data: user } = await supabaseClient.auth.getUser()
-  //       // console.log(user);
-  //       const { data : borrowedBooks } = await supabaseClient
-  //       .from('borrowed_books')
-  //       .select('book_id')
-  //       .eq('user_id', user.user.id)
 
-  //       const { data: profile,  } = await supabase
-  //       .from("profiles")
-  //       .select("*")
-  //       .eq("id", user.user.id)
-  //       .single();
-    
-  //       const bookToFind = { book_id: book[0]?.id};
-    
-  //       const borrowed = borrowedBooks.some(item => item.book_id === bookToFind. book_id);
-  const [bookData, setBookData] = useState([]);
+  const [bookData, setBookData] = useState(null);
   const [books, setBooks] = useState([]);
     const [isloading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user, token, authLoading } = useAuth();
      const router = useRouter();
        const resolvedParams = use(params);
-  console.log("Resolved params:", resolvedParams); // 👀 check this
+  console.log("Resolved params:", resolvedParams); //  check this
 
   const { book } = resolvedParams; // adjust key to match your folder name
   console.log("book value:", book);
 
-        // const response = await fetch(`http://192.168.x.x:7119/api/Book/${params.book}`);
-        // const book = await response.json();
-        // // const data = await fetch(`http://192.168.x.x:7119/api/Book`);
-        // const books = await data.json();
 
-         useEffect(() => {
-            const fetchBooks = async () => {
-              if (!token) return;
-              try {
-                setIsLoading(true);
-                
-                const response = await fetch(`https://librarysystem.runasp.net/api/Book/${book}`, {
-                  headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                  },
-                });
-               
-                
-                 const res = await fetch('https://librarysystem.runasp.net/api/Book', {
-                  headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                  },
-                });
+  useEffect(() => {
+    const fetchBooks = async () => {
+      if (!token || !book) return;
+      try {
+        setIsLoading(true);
         
-                if (!response.ok) {
-                  throw new Error('Failed to fetch books');
-                }
+        const response = await fetch(`https://librarysystem.runasp.net/api/Book/${book}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         
-                const data = await response.json();
-                setBookData(data);
+        
+          const res = await fetch('https://librarysystem.runasp.net/api/Book', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
-                const BooksData = await res.json();
-                setBooks(BooksData);
-                setError(null);
-              } catch (err) {
-                setError(err.message);
-              } finally {
-                setIsLoading(false);
-              }
-            };
-        
-            if (token) {
-              fetchBooks();
-            }
-          }, [book, token]);
+        if (!response.ok) {
+          throw new Error('Failed to fetch books');
+        }
+
+        const data = await response.json();
+        setBookData(data);
+        console.log("bookData:", data);
+
+        const BooksData = await res.json();
+        setBooks(BooksData);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (token) {
+      fetchBooks();
+    }
+  }, [book, token]);
 
           //    useEffect(() => {
           //   const fetchBooks = async () => {                
@@ -124,29 +93,98 @@ export default function Book({ params }) {
           //   }
           // }, [token]);
 
-           if (authLoading) {
-            return (
-              <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="text-xl text-gray-600">Loading...</div>
-              </div>
-            );
-          }
-        
-          if (isloading) {
-            return <div className="p-8 text-center">Loading books...</div>;
-          }
-        
-          if (error) {
-            return <div className="p-8 text-center text-red-600">Error: {error}</div>;
-          }
+if (authLoading) {
+return (
+  <div className="w-full h-full flex items-center justify-center">
+    Loading...
+      <svg
+      className="ml-3 size-5 animate-spin text-gray-600"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+      />
+    </svg>
+  </div>
+);
+}
 
-      
+if (isloading) {
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+    Loading...
+      <svg
+      className="ml-3 size-5 animate-spin text-gray-600"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+      />
+    </svg>
+    </div>
+  );
+}
+
+if (error) {
+  return <div className="p-8 text-center text-red-600">Error: {error}</div>;
+}
+
+
     
         
     
     return(
          <>
          <ProtectedRoute>
+          {isloading && (
+            <div className="w-full flex items-center justify-center ">
+                    Loading...
+                     <svg
+                      className="ml-3 size-5 animate-spin text-gray-600"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
+                    </svg>
+                    </div>
+          )}
             <div className="flex flex-wrap items-start justify-start lg:justify-center gap-8 lg:gap-12 my-8 p-8 sm:p-12 lg-p-8">
                 <div className='flex flex-col items-start justify-between w-[90%] lg:w-[60%] gap-12'>
                   <h2 className="font-[600] text-[26px] sm:text-[52px] text-white">{bookData.title}</h2>
@@ -159,7 +197,7 @@ export default function Book({ params }) {
                   </div>
                   <p className="font-[400] text-[16px] sm:text-[20px] leading-8 text-[#D6E0FF] w-full lg:w-[80%]">{bookData.description}</p>
                   {/* <BorrowButton bookId={book[0]?.id} />        */}
-                  <ReceiptButton bookId={bookData?.bookId} borrowed={false} title={bookData.title} studentName = {"lol"}/>
+                  <ReceiptButton book={bookData} borrowed={false} title={bookData.title} studentName = {"lol"}/>
                </div>
 
                <div className='flex items-center justify-center lg:w-[276px] w-full my-8' >  

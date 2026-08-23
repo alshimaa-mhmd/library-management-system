@@ -2,10 +2,10 @@
 import Image from "next/image";
 import logo from "@/images/logo.png"
 import { useState, useEffect } from "react";
-import BorrowButton from "./borrowButton";
+import BorrowButton from "./BorrowButton";
 
-export default function Receipt({show, handleShow, bookId, title, studentName}){
-
+export default function Receipt({show, handleShow, book, title, studentName}){
+   
     const getCurrentDate = () => {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const date = new Date();
@@ -69,7 +69,7 @@ export default function Receipt({show, handleShow, bookId, title, studentName}){
                 </p>
             <div className="flex gap-4 sm:flex-row flex-col-reverse">
                 <button className="w-[150px] sm:w-[170px] h-[46px] rounded-md py-[10px] px-5 bg-white text-[#111624] font-semibold text-[13px] sm:text-[16px] " onClick={handleShow}>Cancle</button>
-                <BorrowButton bookId={bookId} />
+                <BorrowButton book={book} handleShow={handleShow}/>
             </div>
             <p className="font-normal text-[18px] leading-7 text-[#D6E0FF] hidden sm:block">Keep the pages turning,</p>
             <p className="font-normal text-[18px] leading-7 text-[#D6E0FF] hidden sm:block">The BookWise Team</p>
