@@ -46,8 +46,8 @@ export default function Profile() {
   //   const storedBooks = localStorage.getItem('borrowedBooks') ;
   //   // return JSON.parse(storedBooks) || [];
   // })
-  const storedUser = localStorage.getItem('user');
-  const user = JSON.parse(storedUser);
+  const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+  const user = storedUser ? JSON.parse(storedUser) : null;
   // useEffect(() => {
   //   // const storedUser = localStorage.getItem('user');
   //   // if (storedUser) {

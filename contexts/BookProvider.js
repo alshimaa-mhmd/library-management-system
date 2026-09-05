@@ -8,7 +8,7 @@ const BookProvider = ({ children }) => {
 
      const [borrowedBooks, setBorrowedBooks] = useState(() => {
     if (typeof window === 'undefined') return []; // guard for SSR
-    const stored = localStorage.getItem('borrowedBooks');
+    const stored =typeof window !== 'undefined' ? localStorage.getItem('borrowedBooks') : null;
     return stored ? JSON.parse(stored) : [];
   });
 
